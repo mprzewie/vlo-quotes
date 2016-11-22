@@ -103,9 +103,12 @@ class Stylesheets:
 
 
 browser = mechanicalsoup.Browser()
+page = browser.get("http://users.v-lo.krakow.pl/~mkocot/najlepsze.php?s=1" )
+hrefs=page.soup.find_all('div', class_='opcje')[1].find_all('a')
+max_page=int(hrefs[len(hrefs)-2].text)
 quotes_from_page = []
-for i in range(1, 117):
-    print("Getting quotes from page " + str(i) + "/116")
+for i in range(1, max_page+1):
+    print("Getting quotes from page " + str(i) + "/"+str(max_page))
     page = browser.get("http://users.v-lo.krakow.pl/~mkocot/najlepsze.php?s=" + str(i))
     quotes_from_page += (page.soup.find_all('div', class_='kartka'))
 
